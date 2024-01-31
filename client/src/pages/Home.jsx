@@ -1,9 +1,11 @@
 import React from 'react';
+import Heading from '../components/Questions/Heading.jsx';
 
 export default function Home() {
   return (
     <div className='px-4 py-12 max-w-2xl mx-auto'>
-      <h1 className='text-3xl font-bold  mb-4 text-slate-800'>
+      <Heading />
+      {/* <h1 className='text-3xl font-bold  mb-4 text-slate-800'>
         Welcome to my Auth App!
       </h1>
       <p className='mb-4 text-slate-700'>
@@ -22,7 +24,7 @@ export default function Home() {
         This application is intended as a starting point for building full-stack
         web applications with authentication using the MERN stack. Feel free to
         use it as a template for your own projects!
-      </p>
+      </p> */}
     </div>
   );
 }
