@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/Quiz";
+import Report from "./pages/Report";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
@@ -27,6 +28,10 @@ export default function App() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/quiz" element={<Quiz />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/report" element={<Report />} />
         </Route>
       </Routes>
     </BrowserRouter>
