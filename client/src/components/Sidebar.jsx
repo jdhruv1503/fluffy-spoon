@@ -17,6 +17,12 @@ function SidebarBox({ text, selected, onClick }) {
 export default function Sidebar({ qNo, onSelect }) {
   const [selectedBox, setSelectedBox] = useState(0);
 
+  function handleBoxSelect(i) {
+    console.log("hehe");
+    setSelectedBox(i);
+    onSelect(i);
+  }
+
   return (
     <div className="absolute bg-slate-50 border border-solid border-gray-200 h-[80%] mt-[5%] w-[18%] rounded-lg drop-shadow-md overflow-auto">
       <div className="flex flex-col w-full h-full items-center justify-center space-y-2">
@@ -25,10 +31,7 @@ export default function Sidebar({ qNo, onSelect }) {
             key={i}
             text={`Question ${i + 1}`}
             selected={i === selectedBox}
-            onClick={() => {
-              setSelectedBox(i);
-              onSelect(i);
-            }}
+            onClick={() => handleBoxSelect(i)}
           />
         ))}
       </div>
