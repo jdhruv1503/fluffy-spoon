@@ -20,6 +20,5 @@ export default function MatchTheFollowing({queNo,questionDetails}) {
             </div>
         </div>
       </div>
-    </div>
   );
 }
