@@ -67,7 +67,7 @@ export default function Report({questionDetails}) {
                 <div className='ml-16'>
                   <div className='flex justify-between p-4 rounded-md mb-4'>
                     {queData.optionsGiven.map((option, optionIndex) => (
-                      <span key={optionIndex} className='text-xl'>{option}</span>
+                      <span key={optionIndex} className=' text-xl border-gray-200 rounded-md w-48 h-32'>{option}</span>
                     ))}
                   </div>
                   <div className='flex justify-center items-center p-4 rounded-md'>
