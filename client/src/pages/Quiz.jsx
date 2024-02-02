@@ -1,43 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import LargestNumber from "../components/Questions/LargestNumber";
 import FillInTheBlanks from "../components/Questions/FillInTheBlanks";
 import MatchTheFollowing from "../components/Questions/MatchTheFollowing";
+import { useLocation } from "react-router-dom";
 
 export default function Quiz({}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  let questionsArray = [
-    { type: "choose_largest", options: [1, 2, 3, 4], correct: 3 },
-    {
-      type: "fitb",
-      questions: ["10+10 = ", "10+10 = ", "10+10 = ", "10+10 = "],
-      correct: [20, 20, 20, 20],
-    },
-    { type: "choose_largest", options: [1, 2, 3, 4], correct: 3 },
-    { type: "choose_largest", options: [1, 2, 3, 4], correct: 3 },
-    {
-      type: "fitb",
-      questions: ["10+10 = ", "10+10 = ", "10+10 = ", "10+10 = "],
-      correct: [20, 20, 20, 20],
-    },
-    { type: "choose_largest", options: [1, 2, 3, 4], correct: 3 },
-    {
-      type: "mtf",
-      pairs: [
-        ["23+48", "21"],
-        ["45+16", "37"],
-        ["13+24", "71"],
-        ["12+9", "61"],
-      ],
-      correct: [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-        [3, 3],
-      ],
-    },
-  ];
+  const [questionsArray, setQuizData] = useState([]);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
 
   const handleSelect = (index) => {
     setSelectedIndex(index);
@@ -56,6 +29,27 @@ export default function Quiz({}) {
       setSelectedIndex(selectedIndex + 1);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      fetch(`/api/quiz/get/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setQuizData(data.quiz);
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    }
+  }, [id]);
 
   return (
     <>
@@ -82,7 +76,7 @@ export default function Quiz({}) {
                   key={index}
                   className="w-full h-full opacity-100 transition-opacity duration-300"
                 >
-                  {question.type === "choose_largest" && (
+                  {question.type === "ln" && (
                     <LargestNumber
                       key={index}
                       queNo={index + 1}
@@ -90,7 +84,7 @@ export default function Quiz({}) {
                     />
                   )}
 
-                  {question.type === "fitb" && (
+                  {question.type === "ftb" && (
                     <FillInTheBlanks
                       key={index}
                       queNo={index + 1}

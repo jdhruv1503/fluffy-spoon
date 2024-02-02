@@ -4,12 +4,11 @@ import {
   updateQuiz,
   getQuiz,
 } from "../controllers/quiz.controller.js";
-import { verifyToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
-router.get("/get/:id", verifyToken, getQuiz);
-router.post("/update/:id", verifyToken, updateQuiz);
-router.post("/create/:id", verifyToken, createQuiz);
+router.get("/get/:id", getQuiz);
+router.post("/update/:id", updateQuiz);
+router.post("/create", createQuiz);
 
 export default router;

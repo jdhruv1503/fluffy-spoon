@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import generateRandomQuestion from "../scripts/QuestionGenerator";
 import Sidebar from "../components/Sidebar";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
 
@@ -22,7 +24,7 @@ export default function Dashboard() {
     }
   };
 
-  const generateCustomQuiz = (quizLevel) => {
+  const generateCustomQuiz = async (quizLevel) => {
     console.log(`Generating custom quiz for level ${quizLevel}`);
     let questionsArray = [];
 
@@ -31,7 +33,19 @@ export default function Dashboard() {
       questionsArray.push(generateRandomQuestion(quizLevel));
     }
 
-    console.log(questionsArray);
+    const formData = { quiz: questionsArray };
+
+    const res = await fetch("/api/quiz/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+
+    console.log(data._id);
+    navigate(`/quiz?id=${data._id}`);
   };
 
   return (
