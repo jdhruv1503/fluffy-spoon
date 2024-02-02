@@ -71,6 +71,7 @@ function shuffleArray(array) {
     [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
 
+
   // Return the shuffled array
   return shuffledArray;
 }
