@@ -6,16 +6,16 @@ import Heading from "./Heading";
 export default function Report({ questionDetails }) {
   return (
     <div className="  min-h-screen min-w-screen flex flex-col items-center">
-      <h1 className=" text-5xl mt-20 mb-8 mt-48 font-black">Report</h1>
+      <h1 className=" text-5xl mb-8 mt-48 font-black">Report</h1>
 
-      <div className=" w-full h-16 px-64 px-12 flex flex-row justify-center">
-        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-200 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+      <div className=" w-full h-16 px-12 flex flex-row justify-center">
+        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-100 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
           <p>Points scored:</p>
           <p>
             <span className="text-5xl">80</span>/100{" "}
           </p>
         </div>
-        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-200 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-100 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
           <p>Accuracy:</p>
           <p>
             <span className="text-5xl">80</span>%{" "}
@@ -23,12 +23,11 @@ export default function Report({ questionDetails }) {
         </div>
       </div>
 
-      <div className="mt-36 pb-6 text-5xl font-black">Questions Review</div>
-      {/* <div className=' bg-blue-300 w-64 h-20' >hehe</div> */}
+      <div className="mt-36 pb-6  text-5xl font-black">Questions Review</div>
       <div className=" w-full p-4 mt-4">
         {questionDetails.map((queData, index) => (
-          <div key={index} className=" bg-slate-100 p-5 border border-slate-200 drop-shadow-lg rounded-lg mb-10 ">
-            <h1 className=" text-2xl font-semibold mt-5 mb-5">
+          <div key={index} className=" bg-slate-100 border mx-36 border-slate-200 drop-shadow-lg rounded-lg mb-10 ">
+            <h1 className=" ml-4 text-2xl font-semibold mt-5 mb-5">
               {/* Question {index + 1}. {queData.questionStatement} */}
               <Heading questionNo={index+1} questionStatement={queData.questionStatement}/>
             </h1>
@@ -77,7 +76,7 @@ export default function Report({ questionDetails }) {
                   {queData.optionsGiven.map((option, optionIndex) => (
                     <div
                       key={optionIndex}
-                      className=" text-xl border-gray-200 bg-slate-200 rounded-md w-48 h-20"
+                      className=" text-2xl border rounded-md border-solid bg-white w-48 h-20 flex items-center justify-center"
                     >
                       {option}
                     </div>
@@ -93,17 +92,53 @@ export default function Report({ questionDetails }) {
                   >
                     {queData.optionSelected === queData.correctOptions
                       ? "Your Answer is correct!"
-                      : `Your Answer is wrong! Correct answer: ${queData.correctOptions}`}
+                      : `Wrong Answer! Correct answer: ${queData.correctOptions}`}
                   </span>
+                  {queData.optionSelected && ( // Check if an option was selected
+                    <div className="ml-4 text-xl text-black">
+                      <span className="text-cyan-600">You marked:</span>{" "}
+                      {queData.optionSelected}
+                    </div>
+                  )}
                 </div>
               </div>
-            ) : (
-              <div>
-                {queData.column1.map((item, colIndex) => (
-                  <div key={colIndex}>{/* render column1 items here */}</div>
-                ))}
+            ) : queData.type === "ftb" ? (
+              <div className="ml-16">
+                <div className="flex flex-col mb-4">
+                  {queData.column1.map((item, colIndex) => (
+                    <div key={colIndex} className="text-2xl mb-2 flex items-center">
+                      <div className=" text-2xl border rounded-md border-solid bg-white w-48 h-20 flex items-center justify-center">
+                        {item} = {queData.optionsWritten[colIndex]}
+                      </div>
+                      <div>
+                        {queData.optionsWritten[colIndex] === queData.correctOptions[colIndex] ? (
+                          <span className="text-green-500 ml-2"> Your Answer is correct</span>
+                        ) : (
+                          <span className="text-red-500 ml-2">
+                            Wrong Answer! Correct answer is : {queData.correctOptions[colIndex]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* <div className="flex justify-center items-center p-4 rounded-md">
+                  {queData.optionsWritten.map((option, optionIndex) => (
+                    <div key={optionIndex} className="text-xl">
+                      {queData.optionsWritten[optionIndex] === queData.correctOptions[optionIndex] ? (
+                        <span className="text-green-500">
+                          Your Answer is correct!
+                        </span>
+                      ) : (
+                        <span className="text-red-500">
+                          Wrong Answer! Correct answer: {queData.correctOptions[optionIndex]}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div> */}
               </div>
-            )}
+            ) : null}
           </div>
         ))}
       </div>

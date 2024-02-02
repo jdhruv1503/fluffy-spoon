@@ -48,14 +48,14 @@ export default function App() {
                     questionStatement: "Select the Largest Number",
                     optionsGiven: ["1", "2", "3", "4"],
                     optionSelected: "4",
-                    correctOptions: "4",
+                    correctOptions: "5",
                   },
                   {
                     type: "ftb",
                     questionStatement: "Fill in the blanks",
-                    column1: ["", "", "", ""],
-                    optionsWritten: ["", "", "", ""],
-                    correctOptions: ["", "", "", ""],
+                    column1: ["1+2", "2+3", "3+1", "4+6"],
+                    optionsWritten: ["4", "5", "6", "7"],
+                    correctOptions: ["3", "5", "4", "10"],
                   },
                 ]}
               />
