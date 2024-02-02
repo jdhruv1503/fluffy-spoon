@@ -1,21 +1,58 @@
 function generateMTF(quizLevel) {
   const column1 = [];
   const correctOptions = [];
-
-  for (let i = 0; i < 4; i++) {
-    const firstNum = Math.floor(Math.random() * 90) + 10;
-    const secondNum = Math.floor(Math.random() * 90) + 10;
-    column1.push(`${firstNum}+${secondNum}`);
-    correctOptions.push(`${firstNum + secondNum}`);
+  let firstNum=0,secondNum=0;
+  if (quizLevel===1){
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 90) + 10;
+      secondNum = Math.floor(Math.random() * 90) + 10;
+      column1.push(`${firstNum}+${secondNum}`);
+      correctOptions.push(`${firstNum + secondNum}`);
+    }
   }
+  else if (quizLevel===2){
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 900) + 100;
+      secondNum = Math.floor(Math.random() * 900) + 100;
+      column1.push(`${firstNum}+${secondNum}`);
+      correctOptions.push(`${firstNum + secondNum}`);
+    }
+  }
+  else {
+    let from = ['+', '-'];
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 900) + 100;
+      secondNum = Math.floor(Math.random() * 90) + 10;
+      const operation = from[Math.floor(Math.random() * from.length)];
+      const result = operation === '+' ? `${firstNum} ${operation} ${secondNum}` : `${firstNum} ${operation} ${secondNum}`;
+      column1.push(result);
+      correctOptions.push(eval(result));
+    }
+ }
+
+  // for (let i = 0; i < 4; i++) {
+  //   const firstNum = Math.floor(Math.random() * 90) + 10;
+  //   const secondNum = Math.floor(Math.random() * 90) + 10;
+  //   column1.push(`${firstNum}+${secondNum}`);
+  //   correctOptions.push(`${firstNum + secondNum}`);
+  // }
 
   const column2 = shuffleArray(correctOptions);
+  let pairs = [];
+
+  // Create pairs array
+  for (const item of column1) {
+     const value = eval(item); // Evaluate the expression to get the numeric value
+     const pairIndex = column2.indexOf(value); // Find the index of the matching value in column2
+     if (pairIndex !== -1) {
+       pairs.push([item, column2[pairIndex]]);
+     }
+  }
 
   return {
     type: "mtf",
     optionsWritten: [],
-    column1: column1,
-    column2: column2,
+    pairs:pairs,
     correctOptions: correctOptions,
     questionStatement: "Match the following",
   };
@@ -29,10 +66,25 @@ function shuffleArray(array) {
 }
 
 function generateLN(quizLevel) {
-  const firstNum = Math.floor(Math.random() * 90) + 10;
-  const secondNum = Math.floor(Math.random() * 90) + 10;
-  const thirdNum = Math.floor(Math.random() * 90) + 10;
-  const fourthNum = Math.floor(Math.random() * 90) + 10;
+  let firstNum=0,secondNum=0,thirdNum=0,fourthNum=0;
+  if (quizLevel===1){
+    firstNum = Math.floor(Math.random() * 90) + 10;
+    secondNum = Math.floor(Math.random() * 90) + 10;
+    thirdNum = Math.floor(Math.random() * 90) + 10;
+    fourthNum = Math.floor(Math.random() * 90) + 10;
+  }
+  else if (quizLevel===2){
+    firstNum = Math.floor(Math.random() * 900) + 100;
+    secondNum = Math.floor(Math.random() * 900) + 100;
+    thirdNum = Math.floor(Math.random() * 900) + 100;
+    fourthNum = Math.floor(Math.random() * 900) + 100;
+  }
+  else{
+    firstNum = Math.floor(Math.random() * 9000) + 1000;
+    secondNum = Math.floor(Math.random() * 9000) + 1000;
+    thirdNum = Math.floor(Math.random() * 9000) + 1000;
+    fourthNum = Math.floor(Math.random() * 9000) + 10;  
+  }
 
   const optionsGiven = [firstNum, secondNum, thirdNum, fourthNum];
   const correctOption = Math.max(...optionsGiven);
@@ -49,13 +101,35 @@ function generateLN(quizLevel) {
 function generateFTB(quizLevel) {
   const column1 = [];
   const correctOptions = [];
-
-  for (let i = 0; i < 4; i++) {
-    const firstNum = Math.floor(Math.random() * 90) + 10;
-    const secondNum = Math.floor(Math.random() * 90) + 10;
-    column1.push(`${firstNum}+${secondNum}`);
-    correctOptions.push(`${firstNum + secondNum}`);
+  let firstNum=0,secondNum=0;
+  if (quizLevel===1){
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 90) + 10;
+      secondNum = Math.floor(Math.random() * 90) + 10;
+      column1.push(`${firstNum}+${secondNum}`);
+      correctOptions.push(`${firstNum + secondNum}`);
+    }
   }
+  else if (quizLevel===2){
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 900) + 10;
+      secondNum = Math.floor(Math.random() * 900) + 10;
+      column1.push(`${firstNum}+${secondNum}`);
+      correctOptions.push(`${firstNum + secondNum}`);
+    }
+  }
+  else{
+    let from = ['+', '-'];
+    for (let i = 0; i < 4; i++) {
+      firstNum = Math.floor(Math.random() * 900) + 100;
+      secondNum = Math.floor(Math.random() * 90) + 10;
+      const operation = from[Math.floor(Math.random() * from.length)];
+      const result = operation === '+' ? `${firstNum} ${operation} ${secondNum}` : `${firstNum} ${operation} ${secondNum}`;
+      column1.push(result);
+      correctOptions.push(eval(result));
+    }
+  }
+
 
   return {
     type: "ftb",
