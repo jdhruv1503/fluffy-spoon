@@ -10,19 +10,18 @@ export default function LargestNumber({ queNo, questionDetails }) {
         questionNo={queNo}
         questionStatement="Choose the largest number from the given numbers"
       />
-      <div className=" mt-10 flex px-3 min-w-full justify-between">
-        <div className="border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg">
-          {questionDetails.options[0]}
-        </div>
-        <div className="border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg">
-          {questionDetails.options[1]}
-        </div>
-        <div className="border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg">
-          {questionDetails.options[2]}
-        </div>
-        <div className="border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg">
-          {questionDetails.options[3]}
-        </div>
+      <div className="mt-10 flex px-3 min-w-full justify-between">
+        {questionDetails.options.map((option, index) => (
+          <div
+            key={index}
+            onClick={() => handleOptionClick(option)}
+            className={`border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg ${
+              selectedOption === option ? 'bg-green-500' : ''
+            }`}
+          >
+            {option}
+          </div>
+        ))}
       </div>
     </div>
   );

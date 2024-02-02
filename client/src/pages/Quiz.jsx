@@ -12,6 +12,12 @@ export default function Quiz({}) {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
 
+  // const function option(){
+
+  // }
+  // handle click 2 konse index pe konsa option select 
+  // 
+
   const handleSelect = (index) => {
     setSelectedIndex(index);
   };
