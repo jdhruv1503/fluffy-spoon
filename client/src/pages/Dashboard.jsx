@@ -98,7 +98,9 @@ export default function Dashboard() {
         </div>
         <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
         {currentUser.quizzes.map((quiz, idx) => (
-          <p key={idx}>Quiz ID: {quiz}</p>
+          <div key={idx} className="w-28 h-28 bg-slate-300 rounded-lg shadow-md flex items-center justify-center">
+            <p>Quiz ID: {quiz}</p>
+          </div>
         ))}
       </div>
     </>

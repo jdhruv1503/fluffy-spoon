@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import Heading from "./Heading";
 
-export default function MatchTheFollowing({ queNo, questionDetails }) {
+export default function MatchTheFollowing({ queNo, questionDetails, handleClick }) {
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    handleClick(queNo - 1, option);
+  };
+
   const [prevSelect, setPrevSelect] = useState({ colNum: -1, idx: -1 });
+
+  const [connections, setConnections] = useState([])
+
   const [colorsCol1, setColorsCol1] = useState([
     "bg-slate-50",
     "bg-slate-50",
@@ -91,6 +99,12 @@ export default function MatchTheFollowing({ queNo, questionDetails }) {
         // Draw line if colN is 2 and prevSelect.colNum is 1
         drawLine(colN, idxx);
       }
+      if (prevSelect.colNum !== -1 && prevSelect.colNum !== colN) {
+        // Different column selected, handle connection and reset
+        const newConnection = [prevSelect.idx, idxx];
+        setConnections((prevConnections) => [...prevConnections, newConnection]);
+        // setPrevSelect({ colNum: -1, idx: -1 });
+      }
       setPrevSelect({ colNum: -1, idx: -1 });
     }
   }
@@ -178,6 +192,7 @@ export default function MatchTheFollowing({ queNo, questionDetails }) {
                 className={`border border-solid border-gray-200 rounded-md w-48 h-20 text-3xl flex items-center justify-center text-center ${colorsCol1[idx]}  drop-shadow-lg`}
                 col={1}
                 indx={idx}
+                
                 onClick={() => handleClick(1, idx)}
               >
                 {keyss[0]}

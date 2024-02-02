@@ -25,6 +25,14 @@ export default function Quiz({}) {
       questionsArray2[index].optionSelected = option;
       setQuizData(questionsArray2);
     }
+    else if (questionsArray2[index].type=="ftb"){
+      questionsArray2[index].correctOptions = option;
+      setQuizData(questionsArray2);
+    }
+    else{
+      questionsArray2[index].correctOptions = option;
+      setQuizData(questionsArray2);
+    }
   };
 
   const handleSelect = (index) => {
@@ -105,6 +113,7 @@ export default function Quiz({}) {
                     <FillInTheBlanks
                       key={index}
                       queNo={index + 1}
+                      handleClick={handleOptionClick}
                       questionDetails={question}
                     />
                   )}
@@ -113,6 +122,7 @@ export default function Quiz({}) {
                     <MatchTheFollowing
                       key={index}
                       queNo={index + 1}
+                      handleClick={handleOptionClick}
                       questionDetails={question}
                     />
                   )}

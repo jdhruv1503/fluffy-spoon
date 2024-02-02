@@ -3,7 +3,15 @@ import Heading from "./Heading";
 
 // props have {} object. which has {type : 'ln' (no use), options=[1,2,3,4]}
 
-export default function FillInTheBlanks({ queNo, questionDetails }) {
+export default function FillInTheBlanks({ queNo, questionDetails, handleClick }) {
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    handleClick(queNo - 1, option);
+  };
+
   return (
     <div className="px-12">
       <Heading questionNo={queNo} questionStatement="Fill in the blanks" />
@@ -22,6 +30,7 @@ export default function FillInTheBlanks({ queNo, questionDetails }) {
               onKeyPress={(event) => {
                 if (!/[0-9]/.test(event.key)) {
                   event.preventDefault();
+                  handleOptionClick(option)
                 }
               }}
               type="number"
