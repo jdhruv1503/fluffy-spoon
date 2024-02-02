@@ -40,17 +40,8 @@ function generateMTF(quizLevel) {
   // }
 
   const column2 = shuffleArray(correctOptions);
-  let pairs = [];
-  console.log(column2);
 
-  // Create pairs array
-  for (const item of column1) {
-    const value = eval(item); // Evaluate the expression to get the numeric value
-    const pairIndex = column2.indexOf(value); // Find the index of the matching value in column2
-    if (pairIndex !== -1) {
-      pairs.push([item, column2[pairIndex]]);
-    }
-  }
+  let pairs = column1.map((element, index) => [element, column2[index]]);
 
   return {
     type: "mtf",
@@ -70,7 +61,6 @@ function shuffleArray(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
-
 
   // Return the shuffled array
   return shuffledArray;
@@ -147,7 +137,7 @@ function generateFTB(quizLevel) {
   return {
     type: "ftb",
     optionsWritten: [],
-    column1: column1,
+    questions: column1,
     correctOptions: correctOptions,
     questionStatement: "Fill in the blanks",
   };
