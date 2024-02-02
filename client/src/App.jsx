@@ -39,16 +39,16 @@ export default function App() {
                   {
                     type: "mtf",
                     questionStatement: "Match the Following",
-                    column1: ["", "", "", ""],
-                    optionsSelected: ["", "", "", ""],
-                    correctOptions: ["", "", "", ""],
+                    column1: ["1", "2", "3", "4"],
+                    optionsSelected: ["2", "3", "4", "5"],
+                    correctOptions: ["2", "3", "6", "7"],
                   },
                   {
                     type: "ln",
                     questionStatement: "Select the Largest Number",
-                    optionsGiven: ["", "", "", ""],
-                    optionSelected: "",
-                    correctOptions: "",
+                    optionsGiven: ["1", "2", "3", "4"],
+                    optionSelected: "4",
+                    correctOptions: "4",
                   },
                   {
                     type: "ftb",
