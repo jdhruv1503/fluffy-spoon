@@ -146,7 +146,7 @@ function generateFTB(quizLevel) {
   return {
     type: "ftb",
     optionsWritten: [],
-    column1: column1,
+    questions: column1,
     correctOptions: correctOptions,
     questionStatement: "Fill in the blanks",
   };
