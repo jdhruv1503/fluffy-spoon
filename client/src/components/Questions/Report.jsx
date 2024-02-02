@@ -5,12 +5,24 @@ import React from "react";
 export default function Report({ questionDetails }) {
   return (
     <div className="  min-h-screen min-w-screen flex flex-col items-center">
-      <h1 className=" text-5xl mt-20 mb-8">Report</h1>
-      <div className=" w-full h-16  flex justify-between">
-        <div className=" ml-4 text-xl">Points scored : 80/100 </div>
-        <div className=" mr-4 text-xl">Accuracy: 80 %</div>
+      <h1 className=" text-5xl mt-20 mb-8 mt-48 font-black">Report</h1>
+
+      <div className=" w-full h-16 px-64 px-12 flex flex-row justify-center">
+        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-200 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+          <p>Points scored:</p>
+          <p>
+            <span className="text-5xl">80</span>/100{" "}
+          </p>
+        </div>
+        <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-200 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+          <p>Accuracy:</p>
+          <p>
+            <span className="text-5xl">80</span>%{" "}
+          </p>
+        </div>
       </div>
-      <div className=" text-2xl">Review</div>
+
+      <div className="mt-36 pb-6 text-5xl font-black">Questions Review</div>
       {/* <div className=' bg-blue-300 w-64 h-20' >hehe</div> */}
       <div className=" w-full p-4 mt-4">
         {questionDetails.map((queData, index) => (
