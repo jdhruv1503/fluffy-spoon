@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import React from "react";
 
 export default function Home() {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
     <div className="h-screen flex items-center bg-green-svg justify-center">
       <div className="flex flex-col items-center">
@@ -46,6 +49,11 @@ c519 75 1034 221 1489 422 51 23 94 40 95 39 1 -2 11 -22 21 -46 36 -83 248
         <h1 className="text-5xl font-inter-tight font-bold text-center py-5">
           Welcome to EduSphere!
         </h1>
+        <Link to="/dashboard">
+          <button className="bg-green-900 mt-12 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+            {currentUser ? "Proceed to dashboard" : "Get started"}
+          </button>
+        </Link>
       </div>
     </div>
   );

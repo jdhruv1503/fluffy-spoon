@@ -4,7 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/Quiz";
-import Report from "./pages/Report";
+import Report from "./components/Questions/Report";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,7 +31,36 @@ export default function App() {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/report" element={<Report />} />
+          <Route
+            path="/report"
+            element={
+              <Report
+                questionDetails={[
+                  {
+                    type: "mtf",
+                    questionStatement: "Match the Following",
+                    column1: ["", "", "", ""],
+                    optionsSelected: ["", "", "", ""],
+                    correctOptions: ["", "", "", ""],
+                  },
+                  {
+                    type: "ln",
+                    questionStatement: "Select the Largest Number",
+                    optionsGiven: ["", "", "", ""],
+                    optionSelected: "",
+                    correctOptions: "",
+                  },
+                  {
+                    type: "ftb",
+                    questionStatement: "Fill in the blanks",
+                    column1: ["", "", "", ""],
+                    optionsWritten: ["", "", "", ""],
+                    correctOptions: ["", "", "", ""],
+                  },
+                ]}
+              />
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
