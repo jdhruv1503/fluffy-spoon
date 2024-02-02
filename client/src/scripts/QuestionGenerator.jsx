@@ -1,4 +1,32 @@
-function generateMTF(quizLevel) {}
+function generateMTF(quizLevel) {
+  const column1 = [];
+  const correctOptions = [];
+
+  for (let i = 0; i < 4; i++) {
+    const firstNum = Math.floor(Math.random() * 90) + 10;
+    const secondNum = Math.floor(Math.random() * 90) + 10;
+    column1.push(`${firstNum}+${secondNum}`);
+    correctOptions.push(`${firstNum + secondNum}`);
+  }
+
+  const column2 = shuffleArray(correctOptions);
+
+  return {
+    type: "mtf",
+    optionsWritten: [],
+    column1: column1,
+    column2: column2,
+    correctOptions: correctOptions,
+    questionStatement: "Match the following",
+  };
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 function generateLN(quizLevel) {
   const firstNum = Math.floor(Math.random() * 90) + 10;
@@ -7,7 +35,7 @@ function generateLN(quizLevel) {
   const fourthNum = Math.floor(Math.random() * 90) + 10;
 
   const optionsGiven = [firstNum, secondNum, thirdNum, fourthNum];
-  const correctOption = Math.max(...options);
+  const correctOption = Math.max(...optionsGiven);
 
   return {
     optionsGiven: optionsGiven,

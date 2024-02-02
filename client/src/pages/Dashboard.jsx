@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import generateRandomQuestion from "./scripts/QuestionGenerator";
+import generateRandomQuestion from "../scripts/QuestionGenerator";
 import Sidebar from "../components/Sidebar";
 
 export default function Dashboard() {
@@ -65,7 +65,7 @@ export default function Dashboard() {
             >
               <select
                 name="quizLevel"
-                className="bg-white border px-3 mx-3 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="bg-white border p-3 mx-3 border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               >
                 <option value="1" selected>
                   Learning level 1
