@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Heading from "./Heading";
 
-export default function MatchTheFollowing({ queNo, questionDetails }) {
+export default function MatchTheFollowing({
+  queNo,
+  questionDetails,
+  handleClickback,
+}) {
   const [prevSelect, setPrevSelect] = useState({ colNum: -1, idx: -1 });
   const [colorsCol1, setColorsCol1] = useState([
     "bg-slate-50",

@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Heading from "./Heading";
 
 // props have {} object. which has {type : 'ln' (no use), options=[1,2,3,4]}
 
-export default function FillInTheBlanks({ queNo, questionDetails }) {
+export default function FillInTheBlanks({
+  queNo,
+  questionDetails,
+  handleClick,
+}) {
+  const [answers, setAnswers] = useState(new Array(4).fill(""));
+
+  const changeHandler = (e, index) => {
+    const value = e.target.value;
+    setAnswers((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[index] = value;
+      return updatedAnswers;
+    });
+    handleClick(queNo, answers);
+  };
+
   return (
     <div className="px-12">
       <Heading questionNo={queNo} questionStatement="Fill in the blanks" />
@@ -24,7 +40,9 @@ export default function FillInTheBlanks({ queNo, questionDetails }) {
                   event.preventDefault();
                 }
               }}
+              onChange={(e) => changeHandler(e, index)}
               type="number"
+              value={questionDetails.optionsWritten[index]}
               className="text-center bg-transparent border-transparent border-b-2 border-b-gray-300 border-l-0 border-r-0 border-t-0 focus:border-gray-600 focus:outline-none"
             />
           </div>

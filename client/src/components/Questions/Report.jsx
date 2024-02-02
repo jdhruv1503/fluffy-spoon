@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Heading from "./Heading";
+import { useLocation } from "react-router-dom";
 
 // questionDetails:
 
-export default function Report({ questionDetails }) {
+export default function Report({}) {
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [questionDetails, setQuizData] = useState([]);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
 
   useEffect(() => {
     let total = 0;
@@ -15,10 +21,10 @@ export default function Report({ questionDetails }) {
     questionDetails.forEach((queData) => {
       //  total++;
       if (queData.type === "mtf") {
-        queData.column1.forEach((_, colIndex) => {
+        queData.pairs.forEach((_, colIndex) => {
           total++;
           if (
-            queData.optionsSelected[colIndex] ===
+            queData.optionsWritten[colIndex] ===
             queData.correctOptions[colIndex]
           ) {
             correctCount++;
@@ -26,11 +32,11 @@ export default function Report({ questionDetails }) {
         });
       } else if (queData.type === "ln") {
         total++;
-        if (queData.optionSelected === queData.correctOptions) {
+        if (queData.optionsWritten === queData.correctOptions) {
           correctCount++;
         }
       } else if (queData.type === "ftb") {
-        queData.column1.forEach((_, colIndex) => {
+        queData.questions.forEach((_, colIndex) => {
           total++;
           if (
             queData.optionsWritten[colIndex] ===
@@ -46,6 +52,28 @@ export default function Report({ questionDetails }) {
     setCorrectAnswers(correctCount);
     setScore(Math.round(correctCount * 5));
   }, [questionDetails]);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`/api/quiz/get/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setQuizData(data.quiz);
+          console.log(data.quiz);
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    }
+  }, [id]);
 
   console.log(totalQuestions, correctAnswers);
   return (
@@ -87,11 +115,11 @@ export default function Report({ questionDetails }) {
 
             {queData.type === "mtf" ? (
               <div className="ml-16">
-                {queData.column1.map((item, colIndex) => (
+                {queData.pairs.map((item, colIndex) => (
                   <div
                     key={colIndex}
                     className={`${
-                      queData.optionsSelected[colIndex] ===
+                      queData.optionsWritten[colIndex] ===
                       queData.correctOptions[colIndex]
                         ? "correct-answer"
                         : "incorrect-answer"
@@ -99,15 +127,15 @@ export default function Report({ questionDetails }) {
                   >
                     <div className=" flex items-center space-x-36 ">
                       <div className=" text-2xl border rounded-md border-solid bg-white w-48 h-20 flex items-center justify-center">
-                        {item}=?
+                        {item[0]}=?
                       </div>
                       <div>
                         <div className="text-xl text-black">
                           <span className="text-cyan-600">You marked:</span>{" "}
-                          {queData.optionsSelected[colIndex]}
+                          {queData.optionsWritten[colIndex]}
                         </div>
                         <div>
-                          {queData.optionsSelected[colIndex] ===
+                          {queData.optionsWritten[colIndex] ===
                           queData.correctOptions[colIndex] ? (
                             <span className="text-green-500 mt-2 text-xl">
                               Your Answer is correct!
@@ -127,7 +155,7 @@ export default function Report({ questionDetails }) {
             ) : queData.type === "ln" ? (
               <div className="ml-16">
                 <div className="flex justify-between p-4 rounded-md mb-4">
-                  {queData.optionsGiven.map((option, optionIndex) => (
+                  {queData.options.map((option, optionIndex) => (
                     <div
                       key={optionIndex}
                       className=" text-2xl border rounded-md border-solid bg-white w-48 h-20 flex items-center justify-center"
@@ -159,7 +187,7 @@ export default function Report({ questionDetails }) {
             ) : queData.type === "ftb" ? (
               <div className="ml-16">
                 <div className="flex flex-col mb-4">
-                  {queData.column1.map((item, colIndex) => (
+                  {queData.questions.map((item, colIndex) => (
                     <div
                       key={colIndex}
                       className="text-2xl mb-2 flex items-center"
