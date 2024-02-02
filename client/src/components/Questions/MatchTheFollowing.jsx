@@ -274,27 +274,24 @@ export default function MatchTheFollowing({ queNo, questionDetails }) {
       .querySelector(`[col="${colN}"][indx="${idxx}"]`)
       .getBoundingClientRect();
 
-    const xoffset = 0;
-    const yoffset = 0;
-
     let x1 = 0,
       y1 = 0,
       x2 = 0,
       y2 = 0;
     if (colN == 2) {
-      x1 = rect1.x - xoffset + rect1.width + 14;
-      y1 = rect1.y - yoffset + rect1.height;
+      x1 = rect1.x + rect1.width;
+      y1 = rect1.y + rect1.height / 2;
 
-      x2 = rect2.x - xoffset + 24;
-      y2 = rect2.y - yoffset + rect2.height;
+      x2 = rect2.x;
+      y2 = rect2.y + rect2.height / 2;
       // const newLine = { x1, y1, x2, y2, colN, fromIdx: prevSelect.idx, toIdx: idxx };
       // updatedLines.push(newLine);
     } else {
-      x1 = rect2.x - xoffset + 14 + rect2.width;
-      y1 = rect2.y - yoffset + rect2.height;
+      x1 = rect2.x + rect2.width;
+      y1 = rect2.y + rect2.height / 2;
 
-      x2 = rect1.x - xoffset + 14;
-      y2 = rect1.y - yoffset + rect1.height;
+      x2 = rect1.x;
+      y2 = rect1.y + rect1.height / 2;
 
       // I think ye newline ko update karne se ho jaayega par nahi hua. check again
       // const newLine = { x1, y1, x2, y2, colN, fromIdx: idxx, toIdx: prevSelect.idx };
@@ -318,12 +315,12 @@ export default function MatchTheFollowing({ queNo, questionDetails }) {
   }
 
   return (
-    <div className="min-h-screen min-w-screen flex flex-col justify-center ">
+    <div className="min-h-screen min-w-screen flex flex-col justify-center mb-[-14rem]">
       <div>
         <Heading questionNo={queNo} questionStatement="Match the following" />
 
-        <div className="mt-10 w-108rem h-69.8125rem flex flex-col space-y-3 px-3 min-w-full justify-between ">
-          <svg className="bg-slate-200 absolute ml-48 mt-15">
+        <div className="mt-10 flex flex-col space-y-3 px-3 min-w-full justify-between ">
+          <svg className="absolute top-0 left-0 h-screen w-screen z-[-1]">
             {lineCoordinates.map((line, index) => (
               <line
                 key={index}
