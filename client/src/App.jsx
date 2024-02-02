@@ -39,9 +39,9 @@ export default function App() {
                   {
                     type: "mtf",
                     questionStatement: "Match the Following",
-                    column1: ["1", "2", "3", "4"],
-                    optionsSelected: ["2", "3", "4", "5"],
-                    correctOptions: ["2", "3", "6", "7"],
+                    column1: ["1+2", "2+3", "3+1", "4+6"],
+                    optionsSelected: ["2", "3", "4", "10"],
+                    correctOptions: ["3", "5", "4", "10"],
                   },
                   {
                     type: "ln",
