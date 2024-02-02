@@ -27,18 +27,18 @@
 //   );
 // }
 
-
 import React, { useState } from "react";
 import Heading from "./Heading";
 
-export default function LargestNumber({ queNo, questionDetails }) {
- const [selectedOption, setSelectedOption] = useState(null);
+export default function LargestNumber({ queNo, questionDetails, handleClick }) {
+  const [selectedOption, setSelectedOption] = useState(null);
 
- const handleOptionClick = (option) => {
+  const handleOptionClick = (option) => {
     setSelectedOption(option);
- };
+    handleClick(queNo - 1, option);
+  };
 
- return (
+  return (
     <div>
       <Heading
         questionNo={queNo}
@@ -46,17 +46,17 @@ export default function LargestNumber({ queNo, questionDetails }) {
       />
       <div className="mt-10 flex px-3 min-w-full justify-between">
         {questionDetails.options.map((option, index) => (
-          <div
+          <button
             key={index}
             onClick={() => handleOptionClick(option)}
-            className={`border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center bg-slate-50 drop-shadow-lg ${
-              selectedOption === option ? 'bg-green-500' : ''
+            className={`border border-solid border-gray-200 rounded-md w-48 h-32 text-3xl flex items-center justify-center text-center drop-shadow-lg ${
+              selectedOption === option ? "bg-green-200" : "bg-slate-50"
             }`}
           >
             {option}
-          </div>
+          </button>
         ))}
       </div>
     </div>
- );
+  );
 }

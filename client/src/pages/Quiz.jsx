@@ -15,8 +15,17 @@ export default function Quiz({}) {
   // const function rememberSelectoptions(){
 
   // }
-  // handle click 2 konse index pe konsa option select 
-  // 
+  // handle click 2 konse index pe konsa option select
+  //
+
+  const handleOptionClick = (index, option) => {
+    let questionsArray2 = questionsArray;
+
+    if (questionsArray2[index].type == "ln") {
+      questionsArray2[index].optionSelected = option;
+      setQuizData(questionsArray2);
+    }
+  };
 
   const handleSelect = (index) => {
     setSelectedIndex(index);
@@ -87,6 +96,7 @@ export default function Quiz({}) {
                     <LargestNumber
                       key={index}
                       queNo={index + 1}
+                      handleClick={handleOptionClick}
                       questionDetails={question}
                     />
                   )}
