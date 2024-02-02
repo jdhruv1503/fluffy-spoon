@@ -4,23 +4,26 @@ import Sidebar from "../components/Sidebar";
 export default function Dashboard() {
   return (
     <>
-      <div className="pt-28">
-        <div className="px-4 py-12 max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold  mb-4 text-slate-800">
-            Welcome to my Auth App!
-          </h1>
-          <p className="mb-4 text-slate-700">Ths is a dash.</p>
-          <p className="mb-4 text-slate-700">
-            The front-end of the application is built with React and uses React
-            Router for client-side routing. The back-end is built with Node.js
-            and Express, and uses MongoDB as the database. Authentication is
-            implemented using JSON Web Tokens (JWT).
+      <div className="pt-32">
+        <h1 className="text-5xl text-center">Dashboard</h1>
+        <div className="mt-32 mx-64 px-64 py-16 bg-green-svg bg-no-repeat bg-cover rounded-xl drop-shadow-lg flex flex-col">
+          <h1 className="text-5xl text-center">Daily Challenge</h1>
+          <p className="text-xl py-6 text-center">
+            Unlock your potential! Take the daily challenge, randomly generated
+            according to your learning level.
           </p>
-          <p className="mb-4 text-slate-700">
-            This application is intended as a starting point for building
-            full-stack web applications with authentication using the MERN
-            stack. Feel free to use it as a template for your own projects!
-          </p>
+          <button className="bg-green-900 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+            Daily challenge quiz
+          </button>
+        </div>
+        <div className="mt-8 mx-64 px-64 py-16 bg-slate-300  bg-no-repeat bg-cover rounded-xl drop-shadow-lg flex flex-col">
+          <h1 className="text-5xl text-center">Custom quiz</h1>
+          <p className="text-xl py-6 text-center">Customize your learning</p>
+          <div className="flex flex-row justify-center">
+            <button className="bg-green-900 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+              Custom quiz
+            </button>
+          </div>
         </div>
       </div>
     </>
