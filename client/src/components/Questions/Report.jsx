@@ -1,14 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Heading from "./Heading";
 
 // questionDetails:
 
 export default function Report({ questionDetails }) {
+  const [score, setScore] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+ 
+  useEffect(() => {
+     let total = 0;
+     let correctCount = 0;
+ 
+     questionDetails.forEach((queData) => {
+      //  total++;
+       if (queData.type === "mtf") {
+         queData.column1.forEach((_, colIndex) => {
+          total++;
+           if (queData.optionsSelected[colIndex] === queData.correctOptions[colIndex]) {
+             correctCount++;
+           }
+         });
+       } else if (queData.type === "ln") {
+        total++;
+         if (queData.optionSelected === queData.correctOptions) {
+           correctCount++;
+         }
+       } else if (queData.type === "ftb") {
+         queData.column1.forEach((_, colIndex) => {
+          total++;
+           if (queData.optionsWritten[colIndex] === queData.correctOptions[colIndex]) {
+             correctCount++;
+           }
+         });
+       }
+     });
+ 
+     setTotalQuestions(total);
+     setCorrectAnswers(correctCount);
+     setScore(Math.round((correctCount) * 5));
+  }, [questionDetails]);
+  
+  console.log(totalQuestions,correctAnswers)
   return (
     <div className="  min-h-screen min-w-screen flex flex-col items-center">
       <h1 className=" text-5xl mb-8 mt-48 font-black">Report</h1>
 
-      <div className=" w-full h-16 px-12 flex flex-row justify-center">
+      {/* <div className=" w-full h-16 px-12 flex flex-row justify-center">
         <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-100 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
           <p>Points scored:</p>
           <p>
@@ -21,7 +59,22 @@ export default function Report({ questionDetails }) {
             <span className="text-5xl">80</span>%{" "}
           </p>
         </div>
-      </div>
+      </div> */}
+
+    <div className=" w-full h-16 px-12 flex flex-row justify-center">
+    <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-100 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+        <p>Points scored:</p>
+        <p>
+          <span className="text-5xl">{score}</span>/{totalQuestions *5}{" "}
+        </p>
+    </div>
+    <div className=" mx-8 border border-solid border-gray-200 rounded-md w-64 h-32 bg-slate-100 text-3xl flex flex-col items-center justify-center text-center drop-shadow-lg">
+        <p>Accuracy:</p>
+        <p>
+          <span className="text-5xl">{Math.round((correctAnswers / totalQuestions) * 100)}</span>%{" "}
+        </p>
+    </div>
+    </div>
 
       <div className="mt-36 pb-6  text-5xl font-black">Questions Review</div>
       <div className=" w-full p-4 mt-4">
@@ -31,6 +84,7 @@ export default function Report({ questionDetails }) {
               {/* Question {index + 1}. {queData.questionStatement} */}
               <Heading questionNo={index+1} questionStatement={queData.questionStatement}/>
             </h1>
+            
               {queData.type === "mtf" ? (
               <div className="ml-16">
                 {queData.column1.map((item, colIndex) => (
@@ -122,21 +176,6 @@ export default function Report({ questionDetails }) {
                     </div>
                   ))}
                 </div>
-                {/* <div className="flex justify-center items-center p-4 rounded-md">
-                  {queData.optionsWritten.map((option, optionIndex) => (
-                    <div key={optionIndex} className="text-xl">
-                      {queData.optionsWritten[optionIndex] === queData.correctOptions[optionIndex] ? (
-                        <span className="text-green-500">
-                          Your Answer is correct!
-                        </span>
-                      ) : (
-                        <span className="text-red-500">
-                          Wrong Answer! Correct answer: {queData.correctOptions[optionIndex]}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div> */}
               </div>
             ) : null}
           </div>
