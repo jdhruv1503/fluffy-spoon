@@ -41,6 +41,7 @@ export default function Quiz({}) {
         })
         .then((data) => {
           setQuizData(data.quiz);
+          console.log(data.quiz);
         })
         .catch((error) => {
           console.error(
