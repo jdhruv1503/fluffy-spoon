@@ -76,7 +76,7 @@ export default function Quiz({}) {
                   key={index}
                   className="w-full h-full opacity-100 transition-opacity duration-300"
                 >
-                  {question.type === "choose_largest" && (
+                  {question.type === "ln" && (
                     <LargestNumber
                       key={index}
                       queNo={index + 1}
@@ -84,7 +84,7 @@ export default function Quiz({}) {
                     />
                   )}
 
-                  {question.type === "fitb" && (
+                  {question.type === "ftb" && (
                     <FillInTheBlanks
                       key={index}
                       queNo={index + 1}
