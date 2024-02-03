@@ -14,28 +14,6 @@ export default function Quiz({}) {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
 
-  const handleOptionClick = (index, option) => {
-    let questionsArray2 = questionsArray;
-
-    if (questionsArray2[index].type == "ln") {
-      questionsArray2[index].optionSelected = option;
-      setQuizData(questionsArray2);
-    }
-    else if (questionsArray2[index].type=="ftb"){
-      questionsArray2[index].correctOptions = option;
-      setQuizData(questionsArray2);
-    }
-    else{
-      questionsArray2[index].correctOptions = option;
-      setQuizData(questionsArray2);
-    }
-    if (questionsArray2[index].type == "ftb") {
-      questionsArray2[index].optionsWritten = option;
-      setQuizData(questionsArray2);
-      console.log("set the options written");
-    }
-  };
-
   const handleSelect = (index) => {
     setSelectedIndex(index);
   };
@@ -93,6 +71,7 @@ export default function Quiz({}) {
         qNo={questionsArray.length}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        questionArray={questionsArray}
       />
       <div className=" min-h-screen w=[90vw] ml-[10vw] flex flex-col justify-center items-center ">
         <div className="w-[50%]">
@@ -116,8 +95,8 @@ export default function Quiz({}) {
                     <LargestNumber
                       key={index}
                       queNo={index + 1}
-                      handleClick={handleOptionClick}
-                      questionDetails={questionsArray[index]}
+                      questionArray={questionsArray}
+                      setQuestionArray={setQuizData}
                     />
                   )}
 
@@ -125,8 +104,8 @@ export default function Quiz({}) {
                     <FillInTheBlanks
                       key={index}
                       queNo={index + 1}
-                      handleClick={handleOptionClick}
-                      questionDetails={questionsArray[index]}
+                      questionArray={questionsArray}
+                      setQuestionArray={setQuizData}
                     />
                   )}
 
@@ -134,8 +113,8 @@ export default function Quiz({}) {
                     <MatchTheFollowing
                       key={index}
                       queNo={index + 1}
-                      handleClickback={handleOptionClick}
-                      questionDetails={questionsArray[index]}
+                      questionArray={questionsArray}
+                      setQuestionArray={setQuizData}
                     />
                   )}
                 </div>

@@ -14,6 +14,50 @@ export default function Report({}) {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
 
+  function isOptionMatchedAndCorrect(index, queData) {
+    let found = false;
+    let correspondingIndex = 0;
+
+    queData.optionsWritten.forEach((option, colIndex) => {
+      if (option[0] == index) {
+        correspondingIndex = option[1];
+        found = true;
+      } else if (option[1] == index) {
+        correspondingIndex = option[0];
+        found = true;
+      }
+    });
+
+    if (found) {
+      return (
+        queData.pairs[correspondingIndex][1] === queData.correctOptions[index]
+      );
+    } else {
+      return false;
+    }
+  }
+
+  function findMarkedOption(index, queData) {
+    let found = false;
+    let correspondingIndex = 0;
+
+    queData.optionsWritten.forEach((option, colIndex) => {
+      if (option[0] == index) {
+        correspondingIndex = option[1];
+        found = true;
+      } else if (option[1] == index) {
+        correspondingIndex = option[0];
+        found = true;
+      }
+    });
+
+    if (found) {
+      return queData.pairs[correspondingIndex][1];
+    } else {
+      return "Not attempted";
+    }
+  }
+
   useEffect(() => {
     let total = 0;
     let correctCount = 0;
@@ -23,16 +67,13 @@ export default function Report({}) {
       if (queData.type === "mtf") {
         queData.pairs.forEach((_, colIndex) => {
           total++;
-          if (
-            queData.optionsWritten[colIndex] ===
-            queData.correctOptions[colIndex]
-          ) {
+          if (isOptionMatchedAndCorrect(colIndex, queData)) {
             correctCount++;
           }
         });
       } else if (queData.type === "ln") {
         total++;
-        if (queData.optionsWritten === queData.correctOptions) {
+        if (queData.optionSelected === queData.correctOptions) {
           correctCount++;
         }
       } else if (queData.type === "ftb") {
@@ -119,8 +160,7 @@ export default function Report({}) {
                   <div
                     key={colIndex}
                     className={`${
-                      queData.optionsWritten[colIndex] ===
-                      queData.correctOptions[colIndex]
+                      isOptionMatchedAndCorrect(colIndex, queData)
                         ? "correct-answer"
                         : "incorrect-answer"
                     }flex flex-col p-4 rounded-md mb-4`}
@@ -132,11 +172,10 @@ export default function Report({}) {
                       <div>
                         <div className="text-xl text-black">
                           <span className="text-cyan-600">You marked:</span>{" "}
-                          {queData.optionsWritten[colIndex]}
+                          {findMarkedOption(colIndex, queData)}
                         </div>
                         <div>
-                          {queData.optionsWritten[colIndex] ===
-                          queData.correctOptions[colIndex] ? (
+                          {isOptionMatchedAndCorrect(colIndex, queData) ? (
                             <span className="text-green-500 mt-2 text-xl">
                               Your Answer is correct!
                             </span>
