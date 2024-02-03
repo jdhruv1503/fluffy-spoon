@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import generateRandomQuestion from "../scripts/QuestionGenerator";
@@ -12,9 +12,31 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
+  const [quizzes, setQuizzes] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/user/get/${currentUser._id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        console.log("THIS IS THE DAA");
+        setQuizzes(data.quizzes);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+      });
+  }, [quizzes]);
 
   const generateDailyQuiz = () => {
-    const quizLevel = currentUser.quizzes.length + 1;
+    const quizLevel = quizzes.length + 1;
 
     // Set breakpoints for quiz levels
     if (quizLevel <= 5) {
@@ -104,10 +126,10 @@ export default function Dashboard() {
             </form>
           </div>
         </div>
-        {/* currentUser.quizzes.map((quiz, index) => ( */}
+        {/* quizzes.map((quiz, index) => ( */}
         <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
         <div className=" flex flex-col items-center mt-14 mx-64">
-          {currentUser.quizzes.map((quiz, idx) => (
+          {quizzes.map((quiz, idx) => (
             <div
               key={idx}
               className="w-full h-24 px-4 mb-4 bg-slate-50 drop-shadow-lg rounded-lg shadow-md flex items-center justify-between"

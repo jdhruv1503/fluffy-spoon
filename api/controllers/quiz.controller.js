@@ -1,4 +1,5 @@
 import Quiz from "../models/quiz.model.js";
+import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const test = (req, res) => {
@@ -27,6 +28,16 @@ export const updateQuiz = async (req, res, next) => {
       {
         $set: {
           quiz: req.body.quiz, // Update the quiz data
+        },
+      },
+      { new: true }
+    );
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.body.userid,
+      {
+        $push: {
+          quizzes: req.params.id, // Update the quiz data
         },
       },
       { new: true }

@@ -21,7 +21,7 @@ export default function Quiz({}) {
   };
 
   const handleSubmit = async () => {
-    const formData = { quiz: questionsArray };
+    const formData = { quiz: questionsArray, userid: currentUser._id };
     const res = await fetch(`/api/quiz/update/${id}`, {
       method: "POST",
       headers: {
@@ -30,16 +30,6 @@ export default function Quiz({}) {
       body: JSON.stringify(formData),
     });
     const data = await res.json();
-    const formData2 = { quizzes: [...currentUser.quizzes, id] };
-    const res2 = await fetch(`/api/user/update/${currentUser._id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData2),
-    });
-    const data2 = await res2;
-    console.log(data2);
     navigate(`/report?id=${id}`);
   };
 

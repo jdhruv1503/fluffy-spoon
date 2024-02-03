@@ -8,7 +8,17 @@ export const test = (req, res) => {
   });
 };
 
-// update user
+export const getUser = async (req, res, next) => {
+  try {
+    const quiz = await User.findById(req.params.id);
+    if (!quiz) {
+      throw errorHandler(404, "Quiz not found");
+    }
+    res.status(200).json(quiz);
+  } catch (error) {
+    next(errorHandler(500, error.message));
+  }
+};
 
 export const updateUser = async (req, res, next) => {
   try {
