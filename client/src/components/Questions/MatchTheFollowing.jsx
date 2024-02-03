@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Heading from "./Heading";
 
-export default function MatchTheFollowing({ queNo, questionDetails, handleClick }) {
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    handleClick(queNo - 1, option);
-  };
-
+export default function MatchTheFollowing({
+  queNo,
+  questionDetails,
+  handleClickback,
+}) {
   const [prevSelect, setPrevSelect] = useState({ colNum: -1, idx: -1 });
 
   const [connections, setConnections] = useState([])

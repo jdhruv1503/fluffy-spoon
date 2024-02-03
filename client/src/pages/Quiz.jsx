@@ -4,19 +4,15 @@ import LargestNumber from "../components/Questions/LargestNumber";
 import FillInTheBlanks from "../components/Questions/FillInTheBlanks";
 import MatchTheFollowing from "../components/Questions/MatchTheFollowing";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Quiz({}) {
+  const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [questionsArray, setQuizData] = useState([]);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
-
-  // const function rememberSelectoptions(){
-
-  // }
-  // handle click 2 konse index pe konsa option select
-  //
 
   const handleOptionClick = (index, option) => {
     let questionsArray2 = questionsArray;
@@ -39,7 +35,18 @@ export default function Quiz({}) {
     setSelectedIndex(index);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const formData = { quiz: questionsArray };
+    const res = await fetch(`/api/quiz/update/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    navigate(`/report?id=${id}`);
+  };
 
   const handlePrevious = () => {
     if (selectedIndex > 0) {
@@ -122,7 +129,6 @@ export default function Quiz({}) {
                     <MatchTheFollowing
                       key={index}
                       queNo={index + 1}
-                      handleClick={handleOptionClick}
                       questionDetails={question}
                     />
                   )}
