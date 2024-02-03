@@ -3,27 +3,10 @@ import Heading from "./Heading";
 
 export default function MatchTheFollowing({
   queNo,
-  questionDetails,
-  handleClickback,
+  questionArray,
+  setQuestionArray,
 }) {
   const [prevSelect, setPrevSelect] = useState({ colNum: -1, idx: -1 });
-
-  const [connections, setConnections] = useState([])
-
-  const [colorsCol1, setColorsCol1] = useState([
-    "bg-slate-50",
-    "bg-slate-50",
-    "bg-slate-50",
-    "bg-slate-50",
-  ]);
-  const [colorsCol2, setColorsCol2] = useState([
-    "bg-slate-50",
-    "bg-slate-50",
-    "bg-slate-50",
-    "bg-slate-50",
-  ]);
-  const [lineCoordinates, setLineCoordinates] = useState([]);
-
   const colors = ["bg-red-200", "bg-blue-200", "bg-green-200", "bg-pink-200"];
   const colors2 = [
     "bg-orange-200",
@@ -36,44 +19,44 @@ export default function MatchTheFollowing({
     if (prevSelect.colNum === -1) {
       // No previous selection, handle initial selection
       if (colN === 1) {
-        setColorsCol1((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colors[idxx];
-          return newColors;
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol1[idxx] = colors[idxx];
+          return newArray;
         });
       }
       if (colN === 2) {
-        setColorsCol2((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colors2[idxx];
-          return newColors;
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol2[idxx] = colors[idxx];
+          return newArray;
         });
       }
       setPrevSelect({ colNum: colN, idx: idxx });
     } else if (prevSelect.colNum === colN) {
       // Same column selected again, toggle colors
       if (colN === 1) {
-        setColorsCol1((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colors[idxx];
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol1[idxx] = colors[idxx];
           if (prevSelect.idx !== idxx)
-            newColors[prevSelect.idx] = "bg-slate-50";
-          else if (prevColors[idxx] === "bg-slate-50")
-            newColors[idxx] = colors[idxx];
-          else newColors[idxx] = "bg-slate-50";
-          return newColors;
+            newArray[queNo - 1].colorsCol1[prevSelect.idx] = "bg-slate-50";
+          else if (prevArray[queNo - 1].colorsCol1[idxx] === "bg-slate-50")
+            newArray[queNo - 1].colorsCol1[idxx] = colors[idxx];
+          else newArray[queNo - 1].colorsCol1[idxx] = "bg-slate-50";
+          return newArray;
         });
       }
       if (colN === 2) {
-        setColorsCol2((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colors2[idxx];
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol2[idxx] = colors2[idxx];
           if (prevSelect.idx !== idxx)
-            newColors[prevSelect.idx] = "bg-slate-50";
-          else if (prevColors[idxx] === "bg-slate-50")
-            newColors[idxx] = colors2[idxx];
-          else newColors[idxx] = "bg-slate-50";
-          return newColors;
+            newArray[queNo - 1].colorsCol2[prevSelect.idx] = "bg-slate-50";
+          else if (prevArray[queNo - 1].colorsCol2[idxx] === "bg-slate-50")
+            newArray[queNo - 1].colorsCol2[idxx] = colors2[idxx];
+          else newArray[queNo - 1].colorsCol2[idxx] = "bg-slate-50";
+          return newArray;
         });
       }
       setPrevSelect({ colNum: colN, idx: idxx });
@@ -81,19 +64,21 @@ export default function MatchTheFollowing({
       // Different column selected, handle connection and reset
       if (colN === 1) {
         // Connect column 1 to column 2
-        setColorsCol1((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colorsCol2[prevSelect.idx];
-          return newColors;
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol1[idxx] =
+            questionArray[queNo - 1].colorsCol2[prevSelect.idx];
+          return newArray;
         });
         drawLine(colN, idxx);
       }
       if (colN === 2) {
         // Connect column 2 to column 1
-        setColorsCol2((prevColors) => {
-          const newColors = [...prevColors];
-          newColors[idxx] = colorsCol1[prevSelect.idx];
-          return newColors;
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].colorsCol2[idxx] =
+            questionArray[queNo - 1].colorsCol1[prevSelect.idx];
+          return newArray;
         });
         // Draw line if colN is 2 and prevSelect.colNum is 1
         drawLine(colN, idxx);
@@ -101,7 +86,11 @@ export default function MatchTheFollowing({
       if (prevSelect.colNum !== -1 && prevSelect.colNum !== colN) {
         // Different column selected, handle connection and reset
         const newConnection = [prevSelect.idx, idxx];
-        setConnections((prevConnections) => [...prevConnections, newConnection]);
+        setQuestionArray((prevArray) => {
+          const newArray = [...prevArray];
+          newArray[queNo - 1].optionsWritten.push(newConnection);
+          return newArray;
+        });
         // setPrevSelect({ colNum: -1, idx: -1 });
       }
       setPrevSelect({ colNum: -1, idx: -1 });
@@ -112,7 +101,7 @@ export default function MatchTheFollowing({
 
   function drawLine(colN, idxx) {
     // Filter out existing lines for the current option in both columns
-    const updatedLines = lineCoordinates.filter(
+    const updatedLines = questionArray[queNo - 1].lineCoordinates.filter(
       (line) =>
         !(
           line.colN === colN &&
@@ -164,7 +153,11 @@ export default function MatchTheFollowing({
     updatedLines.push(newLine);
 
     // Update the state with the latest lines
-    setLineCoordinates(updatedLines);
+    setQuestionArray((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers];
+      updatedAnswers[queNo - 1].lineCoordinates = updatedLines;
+      return updatedAnswers;
+    });
   }
 
   return (
@@ -174,7 +167,7 @@ export default function MatchTheFollowing({
 
         <div className="mt-10 flex flex-col space-y-3 px-3 min-w-full justify-between ">
           <svg className="absolute top-0 left-0 h-screen w-screen z-[-1]">
-            {lineCoordinates.map((line, index) => (
+            {questionArray[queNo - 1].lineCoordinates.map((line, index) => (
               <line
                 key={index}
                 x1={line.x1}
@@ -185,19 +178,22 @@ export default function MatchTheFollowing({
               />
             ))}
           </svg>
-          {questionDetails.pairs.map((keyss, idx) => (
+          {questionArray[queNo - 1].pairs.map((keyss, idx) => (
             <div key={idx} className=" flex justify-between">
               <div
-                className={`border border-solid border-gray-200 rounded-md w-48 h-20 text-3xl flex items-center justify-center text-center ${colorsCol1[idx]}  drop-shadow-lg`}
+                className={`border border-solid border-gray-200 rounded-md w-48 h-20 text-3xl flex items-center justify-center text-center ${
+                  questionArray[queNo - 1].colorsCol1[idx]
+                }  drop-shadow-lg`}
                 col={1}
                 indx={idx}
-                
                 onClick={() => handleClick(1, idx)}
               >
                 {keyss[0]}
               </div>
               <div
-                className={`border border-solid border-gray-200 rounded-md w-48 h-20 text-3xl flex items-center justify-center text-center ${colorsCol2[idx]} drop-shadow-lg`}
+                className={`border border-solid border-gray-200 rounded-md w-48 h-20 text-3xl flex items-center justify-center text-center ${
+                  questionArray[queNo - 1].colorsCol2[idx]
+                } drop-shadow-lg`}
                 col={2}
                 indx={idx}
                 onClick={() => handleClick(2, idx)}

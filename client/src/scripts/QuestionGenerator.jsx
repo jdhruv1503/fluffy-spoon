@@ -48,6 +48,9 @@ function generateMTF(quizLevel) {
     optionsWritten: [],
     pairs: pairs,
     correctOptions: correctOptions,
+    lineCoordinates: [],
+    colorsCol1: ["bg-slate-50", "bg-slate-50", "bg-slate-50", "bg-slate-50"],
+    colorsCol2: ["bg-slate-50", "bg-slate-50", "bg-slate-50", "bg-slate-50"],
     questionStatement: "Match the following",
   };
 }
@@ -136,7 +139,7 @@ function generateFTB(quizLevel) {
 
   return {
     type: "ftb",
-    optionsWritten: [],
+    optionsWritten: ["", "", "", ""],
     questions: column1,
     correctOptions: correctOptions,
     questionStatement: "Fill in the blanks",
