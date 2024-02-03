@@ -5,8 +5,10 @@ import FillInTheBlanks from "../components/Questions/FillInTheBlanks";
 import MatchTheFollowing from "../components/Questions/MatchTheFollowing";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Quiz({}) {
+  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [questionsArray, setQuizData] = useState([]);
@@ -28,6 +30,16 @@ export default function Quiz({}) {
       body: JSON.stringify(formData),
     });
     const data = await res.json();
+    const formData2 = { quizzes: [...currentUser.quizzes, id] };
+    const res2 = await fetch(`/api/user/update/${currentUser._id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData2),
+    });
+    const data2 = await res2;
+    console.log(data2);
     navigate(`/report?id=${id}`);
   };
 

@@ -7,7 +7,6 @@ import generateRandomQuestion from "../scripts/QuestionGenerator";
 // assuming we are getting pointscored and accuracy in the quiz object
 
 export default function Dashboard() {
-
   // let temp = ["hello", "world", "this", "is", "a", "test"];
 
   const navigate = useNavigate();
@@ -105,18 +104,28 @@ export default function Dashboard() {
             </form>
           </div>
         </div>
-          {/* currentUser.quizzes.map((quiz, index) => ( */}
-      <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
-      <div className=" flex flex-col items-center mt-14 mx-64">
-      {currentUser.quizzes.map((quiz, idx) => (
-          <div key={idx} className="w-full h-24 mb-4 bg-slate-50 drop-shadow-lg rounded-lg shadow-md flex items-center justify-between">
-            <div className="flex items-center text-xl">
-            <p className="text-lg font-semibold">{idx+1}. Quiz Id: {quiz._id}</p>
+        {/* currentUser.quizzes.map((quiz, index) => ( */}
+        <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
+        <div className=" flex flex-col items-center mt-14 mx-64">
+          {currentUser.quizzes.map((quiz, idx) => (
+            <div
+              key={idx}
+              className="w-full h-24 px-4 mb-4 bg-slate-50 drop-shadow-lg rounded-lg shadow-md flex items-center justify-between"
+            >
+              <div className="flex items-center text-xl">
+                <p className="text-lg font-semibold">
+                  {idx + 1}. Quiz Id: {quiz}
+                </p>
+              </div>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 drop-shadow-lg "
+                onClick={() => pastReportClick(quiz)}
+              >
+                View Report
+              </button>
             </div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 drop-shadow-lg " onClick={()=>pastReportClick(quiz._id)} >View Report</button>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     </>
   );
