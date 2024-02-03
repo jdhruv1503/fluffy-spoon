@@ -17,7 +17,7 @@ export default function FillInTheBlanks({
       updatedAnswers[index] = value;
       return updatedAnswers;
     });
-    handleClick(queNo, answers);
+    handleClick(queNo - 1, answers);
   };
 
   return (
@@ -38,11 +38,12 @@ export default function FillInTheBlanks({
               onKeyPress={(event) => {
                 if (!/[0-9]/.test(event.key)) {
                   event.preventDefault();
+                } else {
+                  changeHandler(event, index);
                 }
               }}
-              onChange={(e) => changeHandler(e, index)}
               type="number"
-              value={questionDetails.optionsWritten[index]}
+              defaultValue={questionDetails.optionsWritten[index]}
               className="text-center bg-transparent border-transparent border-b-2 border-b-gray-300 border-l-0 border-r-0 border-t-0 focus:border-gray-600 focus:outline-none"
             />
           </div>

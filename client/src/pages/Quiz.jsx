@@ -21,6 +21,11 @@ export default function Quiz({}) {
       questionsArray2[index].optionSelected = option;
       setQuizData(questionsArray2);
     }
+    if (questionsArray2[index].type == "ftb") {
+      questionsArray2[index].optionsWritten = option;
+      setQuizData(questionsArray2);
+      console.log("set the options written");
+    }
   };
 
   const handleSelect = (index) => {
@@ -104,7 +109,7 @@ export default function Quiz({}) {
                       key={index}
                       queNo={index + 1}
                       handleClick={handleOptionClick}
-                      questionDetails={question}
+                      questionDetails={questionsArray[index]}
                     />
                   )}
 
@@ -113,7 +118,7 @@ export default function Quiz({}) {
                       key={index}
                       queNo={index + 1}
                       handleClick={handleOptionClick}
-                      questionDetails={question}
+                      questionDetails={questionsArray[index]}
                     />
                   )}
 
@@ -122,7 +127,7 @@ export default function Quiz({}) {
                       key={index}
                       queNo={index + 1}
                       handleClickback={handleOptionClick}
-                      questionDetails={question}
+                      questionDetails={questionsArray[index]}
                     />
                   )}
                 </div>
