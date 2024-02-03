@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
+// I want that in this sidebar whicever question is selected/solved, it should be highlighted with a different color preferably green
+
 function SidebarBox({ text, selected, onClick }) {
   return (
     <button

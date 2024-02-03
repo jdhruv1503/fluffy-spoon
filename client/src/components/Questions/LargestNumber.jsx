@@ -31,10 +31,10 @@ import React, { useState } from "react";
 import Heading from "./Heading";
 
 export default function LargestNumber({ queNo, questionDetails, handleClick }) {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);  // umcomment if needed cuz not sure
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    setSelectedOption(option); // uncomment if needed
     handleClick(queNo - 1, option);
   };
 

@@ -2,9 +2,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import generateRandomQuestion from "../scripts/QuestionGenerator";
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
+
+// assuming we are getting pointscored and accuracy in the quiz object
 
 export default function Dashboard() {
+
+  // let temp = ["hello", "world", "this", "is", "a", "test"];
+
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
@@ -47,6 +52,10 @@ export default function Dashboard() {
     console.log(data._id);
     navigate(`/quiz?id=${data._id}`);
   };
+
+  function pastReportClick(id) {
+    navigate(`/report?id=${id}`);
+  }
 
   return (
     <>
@@ -96,12 +105,18 @@ export default function Dashboard() {
             </form>
           </div>
         </div>
-        <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
-        {currentUser.quizzes.map((quiz, idx) => (
-          <div key={idx} className="w-28 h-28 bg-slate-300 rounded-lg shadow-md flex items-center justify-center">
-            <p>Quiz ID: {quiz}</p>
+          {/* currentUser.quizzes.map((quiz, index) => ( */}
+      <h1 className="text-5xl mt-16 text-center">Past quiz reports</h1>
+      <div className=" flex flex-col items-center mt-14 mx-64">
+      {currentUser.quizzes.map((quiz, idx) => (
+          <div key={idx} className="w-full h-24 mb-4 bg-slate-50 drop-shadow-lg rounded-lg shadow-md flex items-center justify-between">
+            <div className="flex items-center text-xl">
+            <p className="text-lg font-semibold">{idx+1}. Quiz Id: {quiz._id}</p>
+            </div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 drop-shadow-lg " onClick={()=>pastReportClick(quiz._id)} >View Report</button>
           </div>
         ))}
+      </div>
       </div>
     </>
   );

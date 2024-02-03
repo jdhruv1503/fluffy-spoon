@@ -145,7 +145,7 @@ export default function Quiz({}) {
           <div className="grid grid-cols-2 grid-rows-1 auto-cols-min">
             {selectedIndex > 0 ? (
               <button
-                className="display-grid border border-solid border-gray-200 rounded-md text-lg bg-slate-100 text-black px-4 py-2 my-16 right-0 rounded mr-2 w-32 justify-self-start drop-shadow-lg"
+                className="display-grid border border-solid border-gray-200 rounded-md text-lg bg-slate-100 text-black px-4 py-2 my-16 right-0 mr-2 w-32 justify-self-start drop-shadow-lg"
                 onClick={handlePrevious}
               >
                 Previous
@@ -155,14 +155,14 @@ export default function Quiz({}) {
             )}
             {selectedIndex < questionsArray.length - 1 ? (
               <button
-                className="display-grid border border-solid border-gray-200 rounded-md text-lg bg-slate-100 text-black px-4 py-2 my-16 rounded w-32 justify-self-end drop-shadow-lg"
+                className="display-grid border border-solid border-gray-200 rounded-md text-lg bg-slate-100 text-black px-4 py-2 my-16 w-32 justify-self-end drop-shadow-lg"
                 onClick={handleNext}
               >
                 Next
               </button>
             ) : (
               <button
-                className="display-grid border border-solid border-green-800 rounded-md text-lg bg-green-700 text-white px-4 py-2 my-16 rounded w-32 justify-self-end drop-shadow-lg"
+                className="display-grid border border-solid border-green-800 rounded-md text-lg bg-green-700 text-white px-4 py-2 my-16 w-32 justify-self-end drop-shadow-lg"
                 onClick={handleSubmit}
               >
                 Submit
